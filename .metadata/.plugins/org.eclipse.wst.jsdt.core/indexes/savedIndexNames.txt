@@ -1,0 +1,9 @@
+INDEX VERSION 1.4+G:\AshokSir_ProjectBatch\12JRTP-Projects-04-12-20\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+1274890602.index
+3635702297.index
+3433079221.index
+3503638012.index
+630466288.index
+3966076063.index
+1748015671.index
+3433079221.index

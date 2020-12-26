@@ -1,0 +1,24 @@
+package com.harshalit.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.harshalit.entity.Contact;
+
+@Controller
+public class ContactController {
+
+	@GetMapping({"/","/home"})
+	public String homePage() {
+		return "home";
+	}
+	
+	@GetMapping("/contactInfo")
+	public String contactInfoPage(Model model) {
+		model.addAttribute("contactCmd", new Contact());
+		return "contact";
+	}
+	
+	
+}

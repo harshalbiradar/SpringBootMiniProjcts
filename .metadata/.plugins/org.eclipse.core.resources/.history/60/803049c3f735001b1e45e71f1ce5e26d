@@ -1,0 +1,16 @@
+package com.harshalit.entity;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+import lombok.Data;
+
+@Entity
+@Table(name = "Contact_Details")
+@Data
+public class Contact {
+
+	
+	
+	
+}

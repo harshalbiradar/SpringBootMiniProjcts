@@ -1,0 +1,5 @@
+package com.harshalit.entity;
+
+public class Contact {
+
+}
