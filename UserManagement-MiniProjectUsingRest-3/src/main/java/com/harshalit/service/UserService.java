@@ -16,7 +16,7 @@ public interface UserService {
 	
 	public User registerUser(User user);
 
-	public User userIsEmailUnique(String email);
+	public boolean userIsEmailUnique(String email);
 	
 	
 	//login page operations
@@ -26,7 +26,7 @@ public interface UserService {
 	/* public boolean userAccountStatus(String email); */
 	
 	//unlock account operations
-	public boolean checkTemporaryPassIsValid(String email, String temporaryPassword);
+	public boolean checkTemporaryPassIsValid(String email, String tempPwd);
 
 	
 	public boolean updatePasswordAndUnlockAcc(String email, String newPassword);

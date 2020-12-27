@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private CityRepository  cityRepositry;
 	
+	
 	//Registration  page operations
 	@Override 
 	public Map<Integer, String> getCountry() {
@@ -95,9 +96,12 @@ public class UserServiceImpl implements UserService{
 
 
 	@Override
-	public User userIsEmailUnique(String email) {
-		User findByEmail = userRepositry.findByEmail(email);
-		return findByEmail;
+	public boolean userIsEmailUnique(String email) {
+		User isEmailUnique = userRepositry.findByEmail(email);
+		if(isEmailUnique == null) {
+			return true;
+		}
+		return false;
 	}
 
 
@@ -105,29 +109,23 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public String userSignIn(String email, String password) {
-		User findByEmail = userIsEmailUnique(email);
-		if(findByEmail != null) {
-			User findByEmailAndPassword = userRepositry.findByEmailAndPassword(email, password);
-			if(findByEmailAndPassword.getAccountStatus() != "LOCKED") {
-				if(findByEmailAndPassword.getFirstName()!= null){
-					return findByEmailAndPassword.getFirstName()+" you logged in successfully";
+		
+			User userDetails = userRepositry.findByEmailAndPassword(email, password);
+			if(userDetails != null) {
+				if(userDetails.getAccountStatus().equals("LOCKED")){
+					return "ACCOUNT_LOCKED";
 				}else {
-					return "Please Enter correct password";
+					return "LOGIN SUCCESS";
 				}
 			}
-			else {
-				return "Your account is locked";
-			}
-		}else {
-			return "Email id is not registered plese enter valid email address";
-		}
+			return "INVALID_CREDENTIALS";
 		
 	}
 
 
 	@Override
-	public boolean checkTemporaryPassIsValid(String email, String temporaryPassword) {
-		User userDetails = userRepositry.findByEmailAndPassword(email, temporaryPassword);
+	public boolean checkTemporaryPassIsValid(String email, String temPwd) {
+		User userDetails = userRepositry.findByEmailAndPassword(email, temPwd);
 		return userDetails.getUserID()!=null;
 	}
 
