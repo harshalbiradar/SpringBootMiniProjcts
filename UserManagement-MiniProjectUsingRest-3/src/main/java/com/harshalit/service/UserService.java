@@ -14,7 +14,7 @@ public interface UserService {
 
 	public Map<Integer, String> getCity(Integer stateId);
 	
-	public User registerUser(User user);
+	public boolean registerUser(User user);
 
 	public boolean userIsEmailUnique(String email);
 	

@@ -1,7 +1,5 @@
 package com.harshalit.controller;
 
-import java.net.URI;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,9 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.harshalit.entity.User;
+import com.harshalit.model.UnlockAccount;
 import com.harshalit.service.UserService;
 
 @RestController
@@ -20,24 +17,21 @@ public class UserUnlockAccountRestController {
 	@Autowired
 	private UserService userService;
 
-	@PostMapping("/unlockUser/{emailId}/{newPassword}")
-	public ResponseEntity<String> updatePassAndUnlockAcc(@PathVariable String emailId, @PathVariable String newPassword) {
+	@PostMapping("/unlockUserAcc")
+	public ResponseEntity<String> updatePassAndUnlockAcc(@RequestBody UnlockAccount unlockAcc) {
 
-		boolean updatePassAndUnlockAcc = userService.updatePasswordAndUnlockAcc(emailId, newPassword);
-		if (updatePassAndUnlockAcc == true) {
-			return new ResponseEntity<>("Password updated successfully",HttpStatus.OK);
-		}
-		return new ResponseEntity<>("Password failed to update",HttpStatus.BAD_REQUEST);
-
-	}
-
-	@PostMapping("/tempPassValid/{emailId}/{tempPwd}")
-	public ResponseEntity<String> isTmpPwdValid(@PathVariable String emailId , @PathVariable String tempPwd) {
 		boolean checkTemporaryPassIsValid = 
-				userService.checkTemporaryPassIsValid(emailId, tempPwd);
+				userService.checkTemporaryPassIsValid(unlockAcc.getEmailId(), unlockAcc.getTempPwd());
 		if(checkTemporaryPassIsValid == true) {
-			return new ResponseEntity<>("Temporary password is valid",HttpStatus.OK);
+			if(unlockAcc.getNewPwd().equals(unlockAcc.getConfirmPwd())) {
+				boolean updatePassAndUnlockAcc = userService.updatePasswordAndUnlockAcc(unlockAcc.getEmailId(), unlockAcc.getNewPwd());
+				return new ResponseEntity<>("Your Account is successfully unlocked please go to the login",HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>("Please enter correct password",HttpStatus.BAD_REQUEST);
+			}
 		}
 		return new ResponseEntity<>("Temporary password is invalid",HttpStatus.BAD_REQUEST);
 	}
+		
+	
 }

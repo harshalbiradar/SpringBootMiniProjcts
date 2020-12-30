@@ -1,0 +1,12 @@
+Hi  {FNAME}, {LNAME} :
+<br/>
+
+Welcome to IES family, Please use the below password to forgot your account.<br/>
+<br/>
+
+Forgot Password : {FORGOT-PWD}<br/>
+<br/>
+
+
+Thanks & Regards,<br/>
+IES Team.<br/>
